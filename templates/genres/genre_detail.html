@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ genre_label }} · Genres · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">{{ genre_label }}</h1>
+    <div class="muted">Games tagged with "{{ genre_label }}".</div>
+  </div>
+  <a class="btn btn-sm btn-outline-secondary" href="{% url 'genre-list' %}">All genres</a>
+</div>
+
+<div class="row g-3">
+  {% for game in games %}
+    <div class="col-md-6 col-lg-4">
+      {% include "partials/_game_card.html" with game=game %}
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="panel">No games in this genre yet.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

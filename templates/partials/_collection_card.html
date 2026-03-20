@@ -1,0 +1,20 @@
+{% load static %}
+
+<a class="collection-card soft-card p-3 text-decoration-none" href="{% url 'collections:detail' collection.slug %}">
+  <img
+  class="collection-banner mb-3"
+  src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
+  alt="{{ collection.title }}"
+>
+
+  <div class="collection-card-meta">
+    <div class="collection-card-text">
+      <div class="h6 mb-1 text-dark">{{ collection.title }}</div>
+      <div class="muted small">{{ collection.description|truncatechars:90 }}</div>
+    </div>
+
+    <span class="chip collection-card-count">
+      {{ collection.games.count }} games
+    </span>
+  </div>
+</a>

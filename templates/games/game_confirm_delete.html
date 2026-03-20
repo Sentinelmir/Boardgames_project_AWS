@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Delete game · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <h1 class="h4 mb-2">Delete game</h1>
+  <p class="muted mb-3">Please confirm the deletion of this game.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {% include "partials/_form_fields.html" %}
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-danger" type="submit">Yes, delete</button>
+      <a class="btn btn-outline-secondary" href="{{ cancel_url }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

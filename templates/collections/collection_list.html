@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Collections · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Collections</h1>
+    <div class="muted">Curated sets of games.</div>
+  </div>
+</div>
+
+<div class="row g-3">
+  {% for collection in collections %}
+    <div class="col-lg-6">
+      {% include "partials/_collection_card.html" with collection=collection %}
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="panel">No collections yet.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

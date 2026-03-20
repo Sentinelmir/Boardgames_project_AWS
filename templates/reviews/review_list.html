@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load game_extras %}
+{% block title %}Reviews · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Reviews</h1>
+    {% if current_game %}
+      <div class="muted">All reviews for {{ current_game.title }}</div>
+    {% else %}
+      <div class="muted">A simple feed of all reviews.</div>
+    {% endif %}
+  </div>
+  {% if current_game %}
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'reviews:list' %}">See all reviews</a>
+  {% endif %}
+</div>
+
+<div class="panel">
+  {% for review in reviews %}
+    <div class="soft-card p-3 mb-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">
+            <a class="link-soft" href="{% url 'games:detail' review.game.slug %}">{{ review.game.title }}</a>
+          </div>
+          <div class="muted small">by {{ review.author_name }}</div>
+        </div>
+        <span class="chip">{{ review.rating|stars }}</span>
+      </div>
+
+      <p class="muted small mt-2 mb-2">{{ review.text }}</p>
+
+      <div class="d-flex gap-2">
+        <a class="btn btn-sm btn-outline-secondary" href="{% url 'reviews:edit' review.pk %}">Edit</a>
+        <a class="btn btn-sm btn-outline-danger" href="{% url 'reviews:delete' review.pk %}">Delete</a>
+      </div>
+    </div>
+  {% empty %}
+    <div class="muted">No reviews yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

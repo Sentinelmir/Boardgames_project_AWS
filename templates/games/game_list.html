@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Games · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Games</h1>
+    <div class="muted">Browse, filter and sort the catalog.</div>
+  </div>
+  <a class="btn btn-sm btn-primary" href="{% url 'games:create' %}">Add game</a>
+</div>
+
+<form method="get" class="panel mb-4">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label" for="genre">Genre</label>
+      <select class="form-select" name="genre" id="genre">
+        <option value="">Any</option>
+        {% for value, label in genre_choices %}
+          <option value="{{ value }}" {% if selected_genre == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="players">Players</label>
+      <input class="form-control" id="players" name="players" value="{{ selected_players }}" placeholder="e.g. 3">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="sort">Sort by</label>
+      <select class="form-select" name="sort" id="sort">
+        <option value="">Newest first</option>
+        <option value="title" {% if selected_sort == "title" %}selected{% endif %}>Title</option>
+        <option value="duration" {% if selected_sort == "duration" %}selected{% endif %}>Duration</option>
+      </select>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-sm btn-primary" type="submit">Apply</button>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:list' %}">Reset</a>
+    </div>
+  </div>
+</form>
+
+<div class="row g-3">
+  {% for game in games %}
+    <div class="col-md-6 col-lg-4">
+      {% include "partials/_game_card.html" with game=game %}
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="panel">No games found.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

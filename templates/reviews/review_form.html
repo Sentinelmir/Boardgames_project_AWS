@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h4 mb-1">{{ page_title }}</h1>
+      <div class="muted">Write your opinion about the game.</div>
+    </div>
+    <a class="btn btn-sm btn-outline-secondary" href="{{ cancel_url }}">Back</a>
+  </div>
+
+  <div class="soft-card p-3 mb-3">
+    <div class="fw-bold">{{ game.title }}</div>
+    <div class="muted small">{{ game.genres_display }} · {{ game.min_players }}–{{ game.max_players }} players · {{ game.duration_min }} min</div>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    {% include "partials/_form_fields.html" %}
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+      <a class="btn btn-outline-secondary" href="{{ cancel_url }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Genres · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+  <div>
+    <h1 class="h4 mb-1">Genres</h1>
+    <div class="muted">
+      {% if selected_genre_label %}
+        Showing games in "{{ selected_genre_label }}".
+      {% else %}
+        Choose a genre to filter the games below.
+      {% endif %}
+    </div>
+  </div>
+
+  {% if selected_genre %}
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'genre-list' %}">
+      Reset filter
+    </a>
+  {% endif %}
+</div>
+
+<div class="panel genres-panel mb-4">
+  <div class="d-flex flex-wrap gap-2 align-items-center">
+    <a
+    class="chip {% if not selected_genre %}active-chip{% endif %}"
+    href="{% url 'genre-list' %}"
+  >
+    All games
+  </a>
+
+  {% for genre in genres %}
+    <a
+      class="chip {% if selected_genre == genre.value %}active-chip{% endif %}"
+      href="{% url 'genre-list' %}?genre={{ genre.value }}"
+    >
+      {{ genre.label }} ({{ genre.count }})
+    </a>
+  {% endfor %}
+  </div>
+
+</div>
+
+<div class="row g-3">
+  {% for game in games %}
+    <div class="col-md-6 col-lg-4">
+      {% include "partials/_game_card.html" with game=game %}
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="panel">No games found for this genre yet.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

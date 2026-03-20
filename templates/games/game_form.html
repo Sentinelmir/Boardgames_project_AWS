@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }} · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="d-flex align-items-end justify-content-between gap-2 mb-3">
+    <div>
+      <h1 class="h4 mb-1">{{ page_title }}</h1>
+      <div class="muted">Create or edit a board game entry.</div>
+    </div>
+    <a class="btn btn-sm btn-outline-secondary" href="{{ cancel_url }}">Back</a>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include "partials/_form_fields.html" %}
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" type="submit">{{ submit_label }}</button>
+      <a class="btn btn-outline-secondary" href="{{ cancel_url }}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

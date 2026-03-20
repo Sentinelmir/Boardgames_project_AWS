@@ -1,0 +1,32 @@
+<div class="soft-card p-3 h-100">
+  {% if game.image %}
+    <img class="game-thumb mb-3" src="{{ game.image.url }}" alt="{{ game.title }}">
+  {% else %}
+    <img class="game-thumb mb-3" src="https://images.unsplash.com/photo-1611996575749-79a3a250f948?auto=format&fit=crop&w=900&q=60" alt="{{ game.title }}">
+  {% endif %}
+
+  <div class="d-flex align-items-start justify-content-between gap-2">
+    <div>
+      <div class="h6 mb-1">{{ game.title }}</div>
+      <div class="muted small mb-2">{{ game.genres_display }}</div>
+    </div>
+    <span class="chip">
+      {% if game.average_rating %}★ {{ game.average_rating }}{% else %}No ratings{% endif %}
+    </span>
+  </div>
+
+  <div class="kv mb-3">
+    <span class="chip">{{ game.min_players }}–{{ game.max_players }} players</span>
+    <span class="chip">{{ game.duration_min }} min</span>
+    {% if game.age_min %}
+      <span class="chip">Age {{ game.age_min }}+</span>
+    {% endif %}
+  </div>
+
+  <p class="muted small mb-3">{{ game.description|truncatewords:15 }}</p>
+
+  <div class="d-flex gap-2">
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'games:detail' game.slug %}">Details</a>
+    <a class="btn btn-sm btn-primary" href="{% url 'reviews:create' game.slug %}">Add review</a>
+  </div>
+</div>

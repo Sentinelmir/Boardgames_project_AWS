@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ collection.title }} · Collections · Boardgame World{% endblock %}
+
+{% block content %}
+<div class="panel mb-4">
+   <img
+  class="collection-banner mb-3"
+  src="{% static 'images/collections/' %}{{ collection.slug }}.jpg"
+  alt="{{ collection.title }}"
+>
+
+  <div class="d-flex align-items-start justify-content-between gap-2">
+    <div>
+      <h1 class="h4 mb-1">{{ collection.title }}</h1>
+      <div class="muted">{{ collection.description }}</div>
+    </div>
+    <span class="chip">{{ collection.games.count }} games</span>
+  </div>
+
+  <div class="mt-3">
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'collections:list' %}">All collections</a>
+  </div>
+</div>
+
+<h2 class="h5 section-title mb-3">Games in this collection</h2>
+<div class="row g-3">
+  {% for game in collection.games.all %}
+    <div class="col-md-6 col-lg-4">
+      {% include "partials/_game_card.html" with game=game %}
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="panel">No games in this collection yet.</div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
